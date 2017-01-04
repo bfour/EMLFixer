@@ -1,0 +1,10 @@
+This tools lets you remove the Zone.Identifier stream from a selection of files. Removing this Alternate Data Stream (ADS) should effectively fix the issue of changing file modification timestamps in Windows 10.
+
+To start, simply drag & drop the files from which you want to remove the stream onto this window. This allows you, for instance, to use Windows Explorer to search for all your eml-files within a directory and its subdirectories and use advanced filters.
+
+If you want to restore the modification timestamp for these files, please select the root directory of your files and the matching "sync" directory, ie. the directory that contains the same files with the original timestamps. This tool will then try to match the files by their names. 
+Eg. if you store your e-mail (eml) files in C:\myfiles and synchronize with the directory D:\myfiles, this tool will match C:\myfiles\folder\file.eml with D:\myfiles\folder\file.eml.
+ 
+If you finally want to remove the Zone.Identifier ADS, press the start button. If you selected a sync directory, any unmatched files (for which there is no matching counterpart in your sync directory) will not be processed. 
+
+Please note that removing the ADS will change the modification time of your files to the current time. By choosing a sync directory, the timestamps will be restored from the files therein after removing the ADS.

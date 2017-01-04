@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<object type="TAForm" name="helpForm">
+	<properties>
+		<property name="Left" vt="Int16">778</property>
+		<property name="Top" vt="Int16">243</property>
+		<property name="Width" vt="Int16">447</property>
+		<property name="Height" vt="Int16">390</property>
+		<property name="Caption" vt="String">EMLFixer Help</property>
+		<property name="Color" vt="Ident">clBtnFace</property>
+		<property name="Font.Charset" vt="Ident">DEFAULT_CHARSET</property>
+		<property name="Font.Color" vt="Ident">clWindowText</property>
+		<property name="Font.Height" vt="Int8">-11</property>
+		<property name="Font.Name" vt="String">MS Sans Serif</property>
+		<property name="Font.Style" vt="Set"/>
+		<property name="OldCreateOrder" vt="False">False</property>
+		<property name="Position" vt="Ident">poDesktopCenter</property>
+		<property name="Style" vt="Int32">-1798701056</property>
+		<property name="ExStyle" vt="Int16">256</property>
+		<property name="Version" vt="String">1.04</property>
+		<property name="Description" vt="String">A standard Windows Form.</property>
+		<property name="FormOptOnEvent" vt="True">True</property>
+		<property name="FormOptExpVars" vt="False">False</property>
+		<property name="FormOptPopulate" vt="True">True</property>
+		<property name="FormOptVarsForSet" vt="False">False</property>
+		<property name="FormOptIndentChar" vt="Int8">0</property>
+		<property name="FormOptIndentCount" vt="Int8">1</property>
+		<property name="FormOptIndentInit" vt="Int8">0</property>
+		<property name="FormOptVarScope" vt="Int8">1</property>
+		<property name="Resizing" vt="Set"/>
+		<property name="PixelsPerInch" vt="Int8">96</property>
+		<property name="TextHeight" vt="Int8">13</property>
+	</properties>
+	<components>
+		<object type="TAEdit" name="instructionsEdit">
+			<properties>
+				<property name="Left" vt="Int8">10</property>
+				<property name="Top" vt="Int8">10</property>
+				<property name="Width" vt="Int16">415</property>
+				<property name="Height" vt="Int16">299</property>
+				<property name="Color" vt="Ident">clMenuBar</property>
+				<property name="Lines.Strings" vt="List">
+					<list>
+						<li vt="String">This tools lets you remove the Zone.Identifier stream from a selection of files. Removing </li>
+						<li vt="String">this Alternate Data Stream (ADS) should effectively fix the issue of changing file </li>
+						<li vt="String">modification timestamps in Windows 10.</li>
+						<li vt="String"/>
+						<li vt="String">To start, simply drag &amp; drop the files from which you want to remove the stream onto this </li>
+						<li vt="String">window. This allows you, for instance, to use Windows Explorer to search for all your </li>
+						<li vt="String">eml-files within a directory and its subdirectories and use advanced filters.</li>
+						<li vt="String"/>
+						<li vt="String">If you want to restore the modification timestamp for these files, please select the root </li>
+						<li vt="String">directory of your files and the matching &quot;sync&quot; directory, ie. the directory that contains </li>
+						<li vt="String">the same files with the original timestamps. This tool will then try to match the files by </li>
+						<li vt="String">their names. </li>
+						<li vt="String">Eg. if you store your e-mail (eml) files in C:\myfiles and synchronize with the directory D:</li>
+						<li vt="String">\myfiles, this tool will match C:\myfiles\folder\file.eml with D:\myfiles\folder\file.eml.</li>
+						<li vt="String"/>
+						<li vt="String">If you finally want to remove the Zone.Identifier ADS, press the start button. If you </li>
+						<li vt="String">selected a sync directory, any unmatched files (for which there is no matching </li>
+						<li vt="String">counterpart in your sync directory) will not be processed. </li>
+						<li vt="String"/>
+						<li vt="String">Please note that removing the ADS will change the modification time of your files to the </li>
+						<li vt="String">current time. By choosing a sync directory, the timestamps will be restored from the files </li>
+						<li vt="String">therein after removing the ADS.</li>
+					</list>
+				</property>
+				<property name="TabOrder" vt="Int8">0</property>
+				<property name="CtrlStyle" vt="Int32">1342375940</property>
+				<property name="CtrlExStyle" vt="Int8">0</property>
+				<property name="Resizing" vt="Set">DockLeft, DockRight, DockBottom, DockHeight</property>
+			</properties>
+			<components/>
+		</object>
+		<object type="TAButton" name="closeButton">
+			<properties>
+				<property name="Left" vt="Int16">340</property>
+				<property name="Top" vt="Int16">310</property>
+				<property name="Width" vt="Int8">85</property>
+				<property name="Height" vt="Int8">35</property>
+				<property name="Caption" vt="String">Close</property>
+				<property name="TabOrder" vt="Int8">1</property>
+				<property name="Color" vt="Ident">clBtnFace</property>
+				<property name="CtrlStyle" vt="Int32">1342373888</property>
+				<property name="CtrlExStyle" vt="Int8">0</property>
+				<property name="Resizing" vt="Set">DockWidth, DockHeight</property>
+			</properties>
+			<components/>
+		</object>
+	</components>
+</object>

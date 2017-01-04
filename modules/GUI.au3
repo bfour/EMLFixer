@@ -8,9 +8,10 @@
 
 #include <GuiListView.au3>
 #include <GuiImageList.au3>
-#include <GuiAVI.au3>
 
 #include <_dropFiles.au3>
+#include "helpGUI.au3"
+#include "aboutGUI.au3"
 
 Global $GUIIsBusy = False
 Global $GUIIsInterruptRequested = False
@@ -19,10 +20,10 @@ Func _createGUI()
 
    Opt("GUIOnEventMode", 1)
 
-   Global $mainGUI, $fileList, $rootDirInput, $syncDirInput, $statusLabel, $statusIcon, $busyAVI, $startButton
+   Global $mainGUI, $fileList, $rootDirInput, $syncDirInput, $statusLabel, $statusIcon, $busyAVI, $startButton, $stopButton
 
 #Region ### START Koda GUI section ### Form=S:\sabox\grid\EMLFixer\GUI\mainGUI.kxf
-$mainGUI = GUICreate("EMLFixer", 971, 597, -1, -1, BitOR($GUI_SS_DEFAULT_GUI,$WS_MAXIMIZEBOX,$WS_SIZEBOX,$WS_THICKFRAME,$WS_TABSTOP), BitOR($WS_EX_ACCEPTFILES,$WS_EX_WINDOWEDGE))
+$mainGUI = GUICreate("EMLFixer", 972, 598, -1, -1, BitOR($GUI_SS_DEFAULT_GUI,$WS_MAXIMIZEBOX,$WS_SIZEBOX,$WS_THICKFRAME,$WS_TABSTOP), BitOR($WS_EX_ACCEPTFILES,$WS_EX_WINDOWEDGE))
 GUISetOnEvent($GUI_EVENT_CLOSE, "mainGUIClose")
 GUISetOnEvent($GUI_EVENT_MINIMIZE, "mainGUIMinimize")
 GUISetOnEvent($GUI_EVENT_MAXIMIZE, "mainGUIMaximize")
@@ -33,7 +34,7 @@ GUICtrlSetOnEvent(-1, "syncDirInputChange")
 $selectSyncDirButton = GUICtrlCreateButton("Select Sync Directory", 836, 520, 125, 25)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "selectSyncDirButtonClick")
-$startButton = GUICtrlCreateButton("Start", 856, 552, 105, 35)
+$startButton = GUICtrlCreateButton("Start", 866, 552, 95, 35)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "startButtonClick")
 $rootDirInput = GUICtrlCreateInput("", 660, 490, 171, 21)
@@ -45,20 +46,24 @@ GUICtrlSetOnEvent(-1, "fileListClick")
 $selectRootDirButton = GUICtrlCreateButton("Select Root Directory", 836, 490, 125, 25)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "selectRootDirButtonClick")
-$busyAVI = GUICtrlCreateAvi(@ScriptDir&"\GUI\busy_indicator_32x32.avi", -1, 820, 552, 32, 32)
+$busyAVI = GUICtrlCreateAvi("S:\sabox\grid\templates\busy_indicator_small\busy_16.avi", 0, 813, 561, 18, 15, BitOR($GUI_SS_DEFAULT_AVI,$ACS_AUTOPLAY))
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetState(-1, $GUI_HIDE)
-$statusLabel = GUICtrlCreateLabel(" ", 570, 550, 217, 37, BitOR($SS_RIGHT,$SS_CENTERIMAGE))
+$statusLabel = GUICtrlCreateLabel("", 610, 550, 4, 4, BitOR($SS_RIGHT,$SS_CENTERIMAGE))
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "statusLabelClick")
-$stopButton = GUICtrlCreateButton("stopButton", 790, 550, 25, 25)
-GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
-GUICtrlSetState(-1, $GUI_HIDE)
-GUICtrlSetOnEvent(-1, "stopButtonClick")
-$statusIcon = GUICtrlCreateIcon("", -1, 820, 550, 35, 35)
+$statusIcon = GUICtrlCreateIcon("", -1, 813, 557, 22, 22)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetState(-1, $GUI_HIDE)
 GUICtrlSetOnEvent(-1, "statusIconClick")
+$stopButton = GUICtrlCreateIcon("", -1, 840, 557, 22, 22)
+GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
+GUICtrlSetState(-1, $GUI_HIDE)
+GUICtrlSetOnEvent(-1, "stopButtonClick")
+$aboutButton = GUICtrlCreateButton("About", 10, 552, 95, 35)
+GUICtrlSetOnEvent(-1, "aboutButtonClick")
+$helpButton = GUICtrlCreateButton("Help", 110, 552, 95, 35)
+GUICtrlSetOnEvent(-1, "helpButtonClick")
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
@@ -76,6 +81,8 @@ GUISetState(@SW_SHOW)
    _GUICtrlListView_AddColumn($fileList, "Modification time", 100)
    _GUICtrlListView_AddColumn($fileList, "File in sync directory", 300)
    _GUICtrlListView_AddColumn($fileList, "Modification time", 100)
+
+   GUICtrlSetImage($stopButton, @ScriptDir&"\GUI\stop_22.ico")
 
    $fileDropDummy = GUICtrlCreateDummy()
    GUICtrlSetOnEvent(-1, "filesDropped")
@@ -125,7 +132,8 @@ Func filesDropped()
 	  _GUICtrlListView_AddItem($fileList, "File added", 0)
 	  _GUICtrlListView_AddSubItem($fileList, $i, $path, 1)
 	  _GUICtrlListView_AddSubItem($fileList, $i, FileGetTime($path, $FT_MODIFIED, $FT_STRING), 2)
-	  If _isInterruptRequested() Then
+	  _GUICtrlListView_EnsureVisible($fileList, $i)
+	  If Mod($i,14)==0 And _isInterruptRequested() Then
 		 _setAborted("processing dropped files cancelled")
 		 Return
 	  EndIf
@@ -139,22 +147,30 @@ EndFunc
 
 Func stopButtonClick()
    $GUIIsInterruptRequested = True
+   ConsoleWrite("interrupt")
 EndFunc
 
 Func _isInterruptRequested()
-   If $GUIIsInterruptRequested Then
+   If GUIGetMsg() == $stopButton Then
+;~    If $GUIIsInterruptRequested Then
 	  $GUIIsInterruptRequested = False
 	  Return True
+   ElseIf GUIGetMsg() == $GUI_EVENT_CLOSE Then
+	  Exit
    Else
 	  Return False
    EndIf
 EndFunc
 
 Func _setBusy($message)
+   Opt("GUIOnEventMode", 0)
    GUICtrlSetState($startButton, $GUI_DISABLE)
    $GUIIsBusy = True
+   $GUIIsInterruptRequested = False
    GUICtrlSetData($statusLabel, $message)
+   GUICtrlSetState($statusIcon, $GUI_HIDE)
    GUICtrlSetState($busyAVI, $GUI_SHOW)
+   GUICtrlSetState($stopButton, $GUI_SHOW)
    GUICtrlSetState($busyAVI, $GUI_AVISTART)
 EndFunc
 
@@ -163,21 +179,20 @@ Func _updateBusyStatus($message)
 EndFunc
 
 Func _setDone($message)
-   GUICtrlSetState($startButton, $GUI_ENABLE)
-   $GUIIsBusy = False
+   Opt("GUIOnEventMode", 1)
    GUICtrlSetData($statusLabel, $message)
    GUICtrlSetState($busyAVI, $GUI_HIDE)
+   GUICtrlSetState($stopButton, $GUI_HIDE)
+   GUICtrlSetImage($statusIcon, @ScriptDir&"\GUI\OK.ico")
    GUICtrlSetState($statusIcon, $GUI_SHOW)
-   GUICtrlSetData($statusIcon, @ScriptDir&"\GUI\OK.ico")
+   $GUIIsBusy = False
+   $GUIIsInterruptRequested = False
+   GUICtrlSetState($startButton, $GUI_ENABLE)
 EndFunc
 
 Func _setAborted($message)
-   GUICtrlSetState($startButton, $GUI_ENABLE)
-   $GUIIsBusy = False
-   GUICtrlSetData($statusLabel, $message)
-   GUICtrlSetState($busyAVI, $GUI_HIDE)
-   GUICtrlSetState($statusIcon, $GUI_SHOW)
-   GUICtrlSetData($statusIcon, @ScriptDir&"\GUI\warning.ico")
+   _setDone($message)
+   GUICtrlSetImage($statusIcon, @ScriptDir&"\GUI\warning.ico")
 EndFunc
 
 Func _matchRootWithSyncDir()
@@ -189,6 +204,8 @@ Func _matchRootWithSyncDir()
    Local $rootDir = GUICtrlRead($rootDirInput)
    Local $syncDir = GUICtrlRead($syncDirInput)
    Local $paths = $_dropFilesDroppedFilesArray
+   Local $matchCount = 0
+   Local $mismatchCount = 0
 
    For $i=0 To UBound($paths)-1
 	  Local $path = $paths[$i]
@@ -196,20 +213,27 @@ Func _matchRootWithSyncDir()
 	  Local $syncPath = $syncDir & $subPath
 	  If FileExists($syncPath) Then
 		 _GUICtrlListView_AddSubItem($fileList, $i, "ready", 0, 1)
+		 $matchCount += 1
 	  Else
 		 _GUICtrlListView_AddSubItem($fileList, $i, "file missing in sync dir", 0, 2)
+		 $mismatchCount += 1
 	  EndIf
 	  _GUICtrlListView_AddSubItem($fileList, $i, $syncPath, 3)
 	  _GUICtrlListView_AddSubItem($fileList, $i, FileGetTime($syncPath, $FT_MODIFIED, $FT_STRING), 4)
-	  ConsoleWrite($syncPath&@LF)
-	  If _isInterruptRequested() Then
+	  _GUICtrlListView_EnsureVisible($fileList, $i)
+;~ 	  ConsoleWrite($syncPath&@LF)
+	  If Mod($i,10)==0 And _isInterruptRequested() Then
 		 _setAborted("matching files cancelled")
 		 Return
 	  EndIf
    Next
 
    _fixColumnsBug()
-   _setDone("file matching completed")
+   If $mismatchCount==0 Then
+	  _setDone("matching complete: all files match")
+   Else
+	  _setAborted("matching failed for "&$mismatchCount&" files")
+   EndIf
 
 EndFunc
 
@@ -229,6 +253,7 @@ Func startButtonClick()
 
    For $i=0 To _GUICtrlListView_GetItemCount($fileList)-1
 
+	  _GUICtrlListView_EnsureVisible($fileList, $i)
 	  _updateBusyStatus("processing "&$i+1&" of "&_GUICtrlListView_GetItemCount($fileList))
 
 	  Local $item = _GUICtrlListView_GetItemTextArray($fileList, $i)
@@ -259,7 +284,7 @@ Func startButtonClick()
 	  $processedCounter += 1
 	  _GUICtrlListView_AddSubItem($fileList, $i, "ADS removed and time reset", 0, 3)
 
-	  If _isInterruptRequested() Then
+	  If Mod($i,10)==0 And _isInterruptRequested() Then
 		 _setAborted("processing files cancelled")
 		 Return
 	  EndIf
@@ -268,4 +293,12 @@ Func startButtonClick()
 
    _setDone("processed "&$processedCounter&", skipped "&$skippedCounter&" files")
 
+EndFunc
+
+Func aboutButtonClick()
+   _aboutGUIShow()
+EndFunc
+
+Func helpButtonClick()
+   _helpGUIShow()
 EndFunc
