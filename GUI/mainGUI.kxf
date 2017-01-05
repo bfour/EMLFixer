@@ -148,8 +148,8 @@
 			<properties>
 				<property name="Left" vt="Int16">455</property>
 				<property name="Top" vt="Int16">542</property>
-				<property name="Width" vt="Int16">354</property>
-				<property name="Height" vt="Int8">34</property>
+				<property name="Width" vt="Int8">4</property>
+				<property name="Height" vt="Int8">4</property>
 				<property name="TabOrder" vt="Int8">7</property>
 				<property name="HaveVariable" vt="False">False</property>
 				<property name="CtrlStyle" vt="Int32">1342309122</property>
@@ -228,6 +228,20 @@
 				<property name="CtrlStyle" vt="Int32">1342373888</property>
 				<property name="CtrlExStyle" vt="Int8">0</property>
 				<property name="Resizing" vt="Set">DockLeft, DockBottom, DockWidth, DockHeight</property>
+			</properties>
+			<components/>
+		</object>
+		<object type="TAIcon" name="dragdropIcon">
+			<properties>
+				<property name="Left" vt="Int16">363</property>
+				<property name="Top" vt="Int16">190</property>
+				<property name="Width" vt="Int16">245</property>
+				<property name="Height" vt="Int8">123</property>
+				<property name="CtrlStyle" vt="Int32">1342374147</property>
+				<property name="CtrlExStyle" vt="Int8">0</property>
+				<property name="PicturePath" vt="String">S:\sabox\grid\EMLFixer\GUI\dragndrop_text.ico</property>
+				<property name="Resizing" vt="Set">DockHCenter, DockVCenter, DockWidth, DockHeight</property>
+				<property name="TabOrder" vt="Int8">13</property>
 			</properties>
 			<components/>
 		</object>
