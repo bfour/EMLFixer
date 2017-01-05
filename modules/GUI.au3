@@ -49,7 +49,7 @@ GUICtrlSetOnEvent(-1, "fileListClick")
 Global $selectRootDirButton = GUICtrlCreateButton("Select Root Directory", 476, 490, 125, 26)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "selectRootDirButtonClick")
-Global $busyAVI = GUICtrlCreateAvi("S:\sabox\grid\templates\busy_indicator_small\busy_16.avi", -1, 813, 551, 18, 15, BitOR($GUI_SS_DEFAULT_AVI,$ACS_AUTOPLAY))
+Global $busyAVI = GUICtrlCreateAvi(@ScriptDir&"\GUI\busy_16.avi", 0, 813, 551, 18, 15, BitOR($GUI_SS_DEFAULT_AVI,$ACS_AUTOPLAY))
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetState(-1, $GUI_HIDE)
 Global $statusLabel = GUICtrlCreateLabel("", 455, 542, 354, 34, BitOR($SS_RIGHT,$SS_CENTERIMAGE))
@@ -64,10 +64,13 @@ GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHE
 GUICtrlSetState(-1, $GUI_HIDE)
 GUICtrlSetOnEvent(-1, "stopButtonClick")
 Global $aboutButton = GUICtrlCreateButton("About", 10, 542, 95, 35)
+GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "aboutButtonClick")
 Global $helpButton = GUICtrlCreateButton("Help", 110, 542, 95, 35)
+GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "helpButtonClick")
 Global $donateButton = GUICtrlCreateButton("Donate", 210, 542, 95, 35)
+GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "donateButtonClick")
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
@@ -88,6 +91,7 @@ GUISetState(@SW_SHOW)
    _GUICtrlListView_AddColumn($fileList, "Modification time", 100)
    _GUICtrlListView_AddColumn($fileList, "File in sync directory", 300)
    _GUICtrlListView_AddColumn($fileList, "Modification time", 100)
+   _fixColumnsBug()
 
    GUICtrlSetImage($stopButton, @ScriptDir&"\GUI\stop_22.ico")
 
@@ -204,7 +208,7 @@ EndFunc
 
 Func _matchRootWithSyncDir()
 
-   If GUICtrlRead($syncDirInput)=="" Or GUICtrlRead($rootDirInput)=="" Then Return
+   If GUICtrlRead($syncDirInput)=="" Or GUICtrlRead($rootDirInput)=="" Or _GUICtrlListView_GetItemCount($fileList)==0 Then Return
 
    _setBusy("matching files with sync dir")
 
@@ -253,23 +257,24 @@ EndFunc
 
 Func startButtonClick()
 
-   If GUICtrlRead($syncDirInput) == "" Then
-	  Local $answer = MsgBox($MB_OKCANCEL + $MB_ICONINFORMATION, "EMLFixer", "You didn't set a sync directory. "& _
-	  "This means that this tool shall merely remove the Zone Identifier ADS, "& _
-	  "but will not restore any timestamps. Removing the ADS will cause the timestamp "& _
-	  "to be set to the current time under Windows 10. "&@LF& _
-	  @LF& _
-	  "Select OK to continue.")
-	  If $answer <> $IDOK Then
-		 _setAborted("processing aborted")
-		 Return
-	  EndIf
-   EndIf
+;~    If GUICtrlRead($syncDirInput) == "" Then
+;~ 	  Local $answer = MsgBox($MB_OKCANCEL + $MB_ICONINFORMATION, "EMLFixer", "You didn't set a sync directory. "& _
+;~ 	  "This means that this tool shall merely remove the Zone Identifier ADS, "& _
+;~ 	  "but will not restore any timestamps. Removing the ADS will cause the timestamp "& _
+;~ 	  "to be set to the current time under Windows 10. "&@LF& _
+;~ 	  @LF& _
+;~ 	  "Select OK to continue.")
+;~ 	  If $answer <> $IDOK Then
+;~ 		 _setAborted("processing aborted")
+;~ 		 Return
+;~ 	  EndIf
+;~    EndIf
 
    _setBusy("processing, please wait ...")
 
    Local $processedCounter = 0
    Local $skippedCounter = 0
+   Local $errorCounter = 0
 
    For $i=0 To _GUICtrlListView_GetItemCount($fileList)-1
 
@@ -279,40 +284,65 @@ Func startButtonClick()
 	  Local $item = _GUICtrlListView_GetItemTextArray($fileList, $i)
 	  Local $localPath = $item[2]
 	  Local $status = $item[1]
-	  If $status<>"ready" Then
-		 $skippedCounter += 1
-		 ConsoleWrite("skipping "&$localPath&" because status not OK"&@LF)
-		 ContinueLoop
-	  EndIf
-
+	  Local $lastChangeTimeLocal = $item[3]
 	  Local $syncPath = $item[4]
 	  Local $lastChangeTimeSync = $item[5]
+
+	  If $status<>"ready" Then
+		 $skippedCounter += 1
+		 ConsoleWrite("skipping "&$localPath&" because status not ready"&@LF)
+		 If StringInStr($status, "file missing")<>0 Then
+			_GUICtrlListView_AddSubItem($fileList, $i, "skipped: missing sync file", 0, 2)
+		 ElseIf StringInStr($status, "ADS removed")<>0 Then
+			_GUICtrlListView_AddSubItem($fileList, $i, "skipped: already processed", 0, 2)
+		 Else
+			_GUICtrlListView_AddSubItem($fileList, $i, "skipped", 0, 2)
+		 EndIf
+		 ContinueLoop
+	  EndIf
 
 	  _ZoneId_ADSStreamDelete($localPath)
 	  If @error Then
 		 _GUICtrlListView_AddSubItem($fileList, $i, "failed to remove ADS", 0, 4)
+		 $errorCounter += 1
 		 ContinueLoop
 	  EndIf
 	  ConsoleWrite("removed ADS from "&$localPath&@LF)
+	  _GUICtrlListView_AddSubItem($fileList, $i, "ADS removed", 0, 3)
 
-	  FileSetTime($localPath, $lastChangeTimeSync, $FT_MODIFIED)
-	  If @error Then
+	  Local $setTimeError
+	  If $lastChangeTimeSync <> "" Then
+		 FileSetTime($localPath, $lastChangeTimeSync, $FT_MODIFIED)
+		 $setTimeError = @error
+	  Else
+		 FileSetTime($localPath, $lastChangeTimeLocal, $FT_MODIFIED)
+		 $setTimeError = @error
+	  EndIf
+	  If $setTimeError Then
 		 _GUICtrlListView_AddSubItem($fileList, $i, "failed to restore modification time", 0, 4)
+		 $errorCounter += 1
 		 ContinueLoop
 	  EndIf
 	  ConsoleWrite("set last modification date to "&$lastChangeTimeSync&" for "&$localPath&@LF)
-
-	  $processedCounter += 1
 	  _GUICtrlListView_AddSubItem($fileList, $i, "ADS removed and time reset", 0, 3)
 
-	  If Mod($i,10)==0 And _isInterruptRequested() Then
+	  $processedCounter += 1
+
+	  If Mod($i,15)==0 And _isInterruptRequested() Then
 		 _setAborted("processing files cancelled")
 		 Return
 	  EndIf
 
    Next
 
-   _setDone("processed "&$processedCounter&", skipped "&$skippedCounter&" files")
+   Local $doneText = ""
+   If $processedCounter == 0 Then
+	  $doneText = "skipped all "&$skippedCounter&" files"
+   Else
+	  $doneText = "processed "&$processedCounter&", skipped "&$skippedCounter&" files"
+   EndIf
+   If $errorCounter > 0 Then $doneText &= "; "&$errorCounter&" files failed to be processed"
+   _setDone($doneText)
 
 EndFunc
 

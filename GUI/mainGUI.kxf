@@ -197,7 +197,7 @@
 				<property name="Color" vt="Ident">clBtnFace</property>
 				<property name="CtrlStyle" vt="Int32">1342373888</property>
 				<property name="CtrlExStyle" vt="Int8">0</property>
-				<property name="Resizing" vt="Set">DockWidth, DockHeight</property>
+				<property name="Resizing" vt="Set">DockLeft, DockBottom, DockWidth, DockHeight</property>
 			</properties>
 			<components/>
 		</object>
@@ -212,7 +212,7 @@
 				<property name="Color" vt="Ident">clBtnFace</property>
 				<property name="CtrlStyle" vt="Int32">1342373888</property>
 				<property name="CtrlExStyle" vt="Int8">0</property>
-				<property name="Resizing" vt="Set">DockWidth, DockHeight</property>
+				<property name="Resizing" vt="Set">DockLeft, DockBottom, DockWidth, DockHeight</property>
 			</properties>
 			<components/>
 		</object>
@@ -227,7 +227,7 @@
 				<property name="Color" vt="Ident">clBtnFace</property>
 				<property name="CtrlStyle" vt="Int32">1342373888</property>
 				<property name="CtrlExStyle" vt="Int8">0</property>
-				<property name="Resizing" vt="Set">DockWidth, DockHeight</property>
+				<property name="Resizing" vt="Set">DockLeft, DockBottom, DockWidth, DockHeight</property>
 			</properties>
 			<components/>
 		</object>
