@@ -1,4 +1,7 @@
 #pragma compile(ProductName, EMLFixer)
+#pragma compile(FileVersion, 1.1)
+#pragma compile(ProductVersion, 1.1)
+#pragma compile(CompanyName, 'bfour')
 
 #include <FileConstants.au3>
 #include <_ZoneID.au3>
