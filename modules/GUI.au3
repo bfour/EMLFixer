@@ -12,6 +12,7 @@
 #include <_dropFiles.au3>
 #include "helpGUI.au3"
 #include "aboutGUI.au3"
+#include "donateGUI.au3"
 
 Global $GUIIsBusy = False
 Global $GUIIsInterruptRequested = False
@@ -23,49 +24,55 @@ Func _createGUI()
    Global $mainGUI, $fileList, $rootDirInput, $syncDirInput, $statusLabel, $statusIcon, $busyAVI, $startButton, $stopButton
 
 #Region ### START Koda GUI section ### Form=S:\sabox\grid\EMLFixer\GUI\mainGUI.kxf
-$mainGUI = GUICreate("EMLFixer", 972, 598, -1, -1, BitOR($GUI_SS_DEFAULT_GUI,$WS_MAXIMIZEBOX,$WS_SIZEBOX,$WS_THICKFRAME,$WS_TABSTOP), BitOR($WS_EX_ACCEPTFILES,$WS_EX_WINDOWEDGE))
+Global $mainGUI = GUICreate("EMLFixer", 971, 587, -1, -1, BitOR($GUI_SS_DEFAULT_GUI,$WS_MAXIMIZEBOX,$WS_SIZEBOX,$WS_THICKFRAME,$WS_TABSTOP), BitOR($WS_EX_ACCEPTFILES,$WS_EX_WINDOWEDGE))
 GUISetOnEvent($GUI_EVENT_CLOSE, "mainGUIClose")
 GUISetOnEvent($GUI_EVENT_MINIMIZE, "mainGUIMinimize")
 GUISetOnEvent($GUI_EVENT_MAXIMIZE, "mainGUIMaximize")
 GUISetOnEvent($GUI_EVENT_RESTORE, "mainGUIRestore")
-$syncDirInput = GUICtrlCreateInput("", 660, 520, 171, 21)
-GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKHEIGHT)
+Global $syncDirInput = GUICtrlCreateInput("", 610, 491, 221, 24)
+GUICtrlSetFont(-1, 10, 400, 0, "MS Sans Serif")
+GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "syncDirInputChange")
-$selectSyncDirButton = GUICtrlCreateButton("Select Sync Directory", 836, 520, 125, 25)
+Global $selectSyncDirButton = GUICtrlCreateButton("Select Sync Directory", 836, 490, 125, 26)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "selectSyncDirButtonClick")
-$startButton = GUICtrlCreateButton("Start", 866, 552, 95, 35)
+Global $startButton = GUICtrlCreateButton("Start", 866, 542, 95, 35)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "startButtonClick")
-$rootDirInput = GUICtrlCreateInput("", 660, 490, 171, 21)
-GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKHEIGHT)
+Global $rootDirInput = GUICtrlCreateInput("", 250, 491, 221, 24)
+GUICtrlSetFont(-1, 10, 400, 0, "MS Sans Serif")
+GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "rootDirInputChange")
-$fileList = GUICtrlCreateListView("", 10, 10, 950, 470)
+Global $fileList = GUICtrlCreateListView("", 10, 10, 950, 470)
 GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKRIGHT+$GUI_DOCKTOP+$GUI_DOCKBOTTOM)
 GUICtrlSetOnEvent(-1, "fileListClick")
-$selectRootDirButton = GUICtrlCreateButton("Select Root Directory", 836, 490, 125, 25)
+Global $selectRootDirButton = GUICtrlCreateButton("Select Root Directory", 476, 490, 125, 26)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "selectRootDirButtonClick")
-$busyAVI = GUICtrlCreateAvi("S:\sabox\grid\templates\busy_indicator_small\busy_16.avi", 0, 813, 561, 18, 15, BitOR($GUI_SS_DEFAULT_AVI,$ACS_AUTOPLAY))
+Global $busyAVI = GUICtrlCreateAvi("S:\sabox\grid\templates\busy_indicator_small\busy_16.avi", -1, 813, 551, 18, 15, BitOR($GUI_SS_DEFAULT_AVI,$ACS_AUTOPLAY))
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetState(-1, $GUI_HIDE)
-$statusLabel = GUICtrlCreateLabel("", 610, 550, 4, 4, BitOR($SS_RIGHT,$SS_CENTERIMAGE))
+Global $statusLabel = GUICtrlCreateLabel("", 455, 542, 354, 34, BitOR($SS_RIGHT,$SS_CENTERIMAGE))
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetOnEvent(-1, "statusLabelClick")
-$statusIcon = GUICtrlCreateIcon("", -1, 813, 557, 22, 22)
+Global $statusIcon = GUICtrlCreateIcon("", -1, 813, 547, 22, 22)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetState(-1, $GUI_HIDE)
 GUICtrlSetOnEvent(-1, "statusIconClick")
-$stopButton = GUICtrlCreateIcon("", -1, 840, 557, 22, 22)
+Global $stopButton = GUICtrlCreateIcon("", -1, 840, 549, 22, 22)
 GUICtrlSetResizing(-1, $GUI_DOCKRIGHT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
 GUICtrlSetState(-1, $GUI_HIDE)
 GUICtrlSetOnEvent(-1, "stopButtonClick")
-$aboutButton = GUICtrlCreateButton("About", 10, 552, 95, 35)
+Global $aboutButton = GUICtrlCreateButton("About", 10, 542, 95, 35)
 GUICtrlSetOnEvent(-1, "aboutButtonClick")
-$helpButton = GUICtrlCreateButton("Help", 110, 552, 95, 35)
+Global $helpButton = GUICtrlCreateButton("Help", 110, 542, 95, 35)
 GUICtrlSetOnEvent(-1, "helpButtonClick")
+Global $donateButton = GUICtrlCreateButton("Donate", 210, 542, 95, 35)
+GUICtrlSetOnEvent(-1, "donateButtonClick")
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
+
+   GUICtrlSetState($selectRootDirButton, $GUI_SHOW) ; TODO remove
 
    Local $iImageSquareSize = 14
    Local $hImage = _GUIImageList_Create($iImageSquareSize, $iImageSquareSize, 5, 3)
@@ -129,7 +136,7 @@ Func filesDropped()
    _GUICtrlListView_DeleteAllItems($fileList)
    For $i=0 To UBound($_dropFilesDroppedFilesArray)-1
 	  Local $path = $_dropFilesDroppedFilesArray[$i]
-	  _GUICtrlListView_AddItem($fileList, "File added", 0)
+	  _GUICtrlListView_AddItem($fileList, "ready", 0)
 	  _GUICtrlListView_AddSubItem($fileList, $i, $path, 1)
 	  _GUICtrlListView_AddSubItem($fileList, $i, FileGetTime($path, $FT_MODIFIED, $FT_STRING), 2)
 	  _GUICtrlListView_EnsureVisible($fileList, $i)
@@ -246,6 +253,19 @@ EndFunc
 
 Func startButtonClick()
 
+   If GUICtrlRead($syncDirInput) == "" Then
+	  Local $answer = MsgBox($MB_OKCANCEL + $MB_ICONINFORMATION, "EMLFixer", "You didn't set a sync directory. "& _
+	  "This means that this tool shall merely remove the Zone Identifier ADS, "& _
+	  "but will not restore any timestamps. Removing the ADS will cause the timestamp "& _
+	  "to be set to the current time under Windows 10. "&@LF& _
+	  @LF& _
+	  "Select OK to continue.")
+	  If $answer <> $IDOK Then
+		 _setAborted("processing aborted")
+		 Return
+	  EndIf
+   EndIf
+
    _setBusy("processing, please wait ...")
 
    Local $processedCounter = 0
@@ -264,6 +284,7 @@ Func startButtonClick()
 		 ConsoleWrite("skipping "&$localPath&" because status not OK"&@LF)
 		 ContinueLoop
 	  EndIf
+
 	  Local $syncPath = $item[4]
 	  Local $lastChangeTimeSync = $item[5]
 
@@ -301,4 +322,8 @@ EndFunc
 
 Func helpButtonClick()
    _helpGUIShow()
+EndFunc
+
+Func donateButtonClick()
+   _donateGUIShow()
 EndFunc

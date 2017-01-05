@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <object type="TAForm" name="mainGUI">
 	<properties>
-		<property name="Left" vt="Int16">462</property>
-		<property name="Top" vt="Int16">178</property>
-		<property name="Width" vt="Int16">987</property>
-		<property name="Height" vt="Int16">636</property>
+		<property name="Left" vt="Int16">403</property>
+		<property name="Top" vt="Int16">268</property>
+		<property name="Width" vt="Int16">986</property>
+		<property name="Height" vt="Int16">625</property>
 		<property name="Caption" vt="String">EMLFixer</property>
 		<property name="Color" vt="Ident">clBtnFace</property>
 		<property name="Font.Charset" vt="Ident">DEFAULT_CHARSET</property>
@@ -33,23 +33,29 @@
 	<components>
 		<object type="TAInput" name="syncDirInput">
 			<properties>
-				<property name="Left" vt="Int16">660</property>
-				<property name="Top" vt="Int16">520</property>
-				<property name="Width" vt="Int16">171</property>
-				<property name="Height" vt="Int8">21</property>
+				<property name="Left" vt="Int16">610</property>
+				<property name="Top" vt="Int16">491</property>
+				<property name="Width" vt="Int16">221</property>
+				<property name="Height" vt="Int8">24</property>
+				<property name="Font.Charset" vt="Ident">DEFAULT_CHARSET</property>
+				<property name="Font.Color" vt="Ident">clWindowText</property>
+				<property name="Font.Height" vt="Int8">-13</property>
+				<property name="Font.Name" vt="String">MS Sans Serif</property>
+				<property name="Font.Style" vt="Set"/>
+				<property name="ParentFont" vt="False">False</property>
 				<property name="TabOrder" vt="Int8">0</property>
 				<property name="CtrlStyle" vt="Int32">1342374016</property>
 				<property name="CtrlExStyle" vt="Int16">512</property>
-				<property name="Resizing" vt="Set">DockRight, DockBottom, DockHeight</property>
+				<property name="Resizing" vt="Set">DockRight, DockBottom, DockWidth, DockHeight</property>
 			</properties>
 			<components/>
 		</object>
 		<object type="TAButton" name="selectSyncDirButton">
 			<properties>
 				<property name="Left" vt="Int16">836</property>
-				<property name="Top" vt="Int16">520</property>
+				<property name="Top" vt="Int16">490</property>
 				<property name="Width" vt="Int8">125</property>
-				<property name="Height" vt="Int8">25</property>
+				<property name="Height" vt="Int8">26</property>
 				<property name="Caption" vt="String">Select Sync Directory</property>
 				<property name="TabOrder" vt="Int8">1</property>
 				<property name="Color" vt="Ident">clBtnFace</property>
@@ -62,7 +68,7 @@
 		<object type="TAButton" name="startButton">
 			<properties>
 				<property name="Left" vt="Int16">866</property>
-				<property name="Top" vt="Int16">552</property>
+				<property name="Top" vt="Int16">542</property>
 				<property name="Width" vt="Int8">95</property>
 				<property name="Height" vt="Int8">35</property>
 				<property name="Caption" vt="String">Start</property>
@@ -76,14 +82,20 @@
 		</object>
 		<object type="TAInput" name="rootDirInput">
 			<properties>
-				<property name="Left" vt="Int16">660</property>
-				<property name="Top" vt="Int16">490</property>
-				<property name="Width" vt="Int16">171</property>
-				<property name="Height" vt="Int8">21</property>
+				<property name="Left" vt="Int16">250</property>
+				<property name="Top" vt="Int16">491</property>
+				<property name="Width" vt="Int16">221</property>
+				<property name="Height" vt="Int8">24</property>
+				<property name="Font.Charset" vt="Ident">DEFAULT_CHARSET</property>
+				<property name="Font.Color" vt="Ident">clWindowText</property>
+				<property name="Font.Height" vt="Int8">-13</property>
+				<property name="Font.Name" vt="String">MS Sans Serif</property>
+				<property name="Font.Style" vt="Set"/>
+				<property name="ParentFont" vt="False">False</property>
 				<property name="TabOrder" vt="Int8">3</property>
 				<property name="CtrlStyle" vt="Int32">1342374016</property>
 				<property name="CtrlExStyle" vt="Int16">512</property>
-				<property name="Resizing" vt="Set">DockRight, DockBottom, DockHeight</property>
+				<property name="Resizing" vt="Set">DockRight, DockBottom, DockWidth, DockHeight</property>
 			</properties>
 			<components/>
 		</object>
@@ -104,10 +116,10 @@
 		</object>
 		<object type="TAButton" name="selectRootDirButton">
 			<properties>
-				<property name="Left" vt="Int16">836</property>
+				<property name="Left" vt="Int16">476</property>
 				<property name="Top" vt="Int16">490</property>
 				<property name="Width" vt="Int8">125</property>
-				<property name="Height" vt="Int8">25</property>
+				<property name="Height" vt="Int8">26</property>
 				<property name="Caption" vt="String">Select Root Directory</property>
 				<property name="TabOrder" vt="Int8">5</property>
 				<property name="Color" vt="Ident">clBtnFace</property>
@@ -120,7 +132,7 @@
 		<object type="TAAvi" name="busyAVI">
 			<properties>
 				<property name="Left" vt="Int16">813</property>
-				<property name="Top" vt="Int16">561</property>
+				<property name="Top" vt="Int16">551</property>
 				<property name="Width" vt="Int8">18</property>
 				<property name="Height" vt="Int8">15</property>
 				<property name="FileName" vt="String">S:\sabox\grid\templates\busy_indicator_small\busy_16.avi</property>
@@ -134,11 +146,10 @@
 		</object>
 		<object type="TALabel" name="statusLabel">
 			<properties>
-				<property name="Left" vt="Int16">610</property>
-				<property name="Top" vt="Int16">550</property>
-				<property name="Width" vt="Int16">197</property>
-				<property name="Height" vt="Int8">37</property>
-				<property name="Caption" vt="String"> </property>
+				<property name="Left" vt="Int16">455</property>
+				<property name="Top" vt="Int16">542</property>
+				<property name="Width" vt="Int16">354</property>
+				<property name="Height" vt="Int8">34</property>
 				<property name="TabOrder" vt="Int8">7</property>
 				<property name="HaveVariable" vt="False">False</property>
 				<property name="CtrlStyle" vt="Int32">1342309122</property>
@@ -150,7 +161,7 @@
 		<object type="TAIcon" name="statusIcon">
 			<properties>
 				<property name="Left" vt="Int16">813</property>
-				<property name="Top" vt="Int16">557</property>
+				<property name="Top" vt="Int16">547</property>
 				<property name="Width" vt="Int8">22</property>
 				<property name="Height" vt="Int8">22</property>
 				<property name="CtrlStyle" vt="Int32">1342374147</property>
@@ -164,7 +175,7 @@
 		<object type="TAIcon" name="stopButton">
 			<properties>
 				<property name="Left" vt="Int16">840</property>
-				<property name="Top" vt="Int16">557</property>
+				<property name="Top" vt="Int16">549</property>
 				<property name="Width" vt="Int8">22</property>
 				<property name="Height" vt="Int8">22</property>
 				<property name="CtrlStyle" vt="Int32">1342374147</property>
@@ -178,7 +189,7 @@
 		<object type="TAButton" name="aboutButton">
 			<properties>
 				<property name="Left" vt="Int8">10</property>
-				<property name="Top" vt="Int16">552</property>
+				<property name="Top" vt="Int16">542</property>
 				<property name="Width" vt="Int8">95</property>
 				<property name="Height" vt="Int8">35</property>
 				<property name="Caption" vt="String">About</property>
@@ -193,11 +204,26 @@
 		<object type="TAButton" name="helpButton">
 			<properties>
 				<property name="Left" vt="Int8">110</property>
-				<property name="Top" vt="Int16">552</property>
+				<property name="Top" vt="Int16">542</property>
 				<property name="Width" vt="Int8">95</property>
 				<property name="Height" vt="Int8">35</property>
 				<property name="Caption" vt="String">Help</property>
 				<property name="TabOrder" vt="Int8">11</property>
+				<property name="Color" vt="Ident">clBtnFace</property>
+				<property name="CtrlStyle" vt="Int32">1342373888</property>
+				<property name="CtrlExStyle" vt="Int8">0</property>
+				<property name="Resizing" vt="Set">DockWidth, DockHeight</property>
+			</properties>
+			<components/>
+		</object>
+		<object type="TAButton" name="donateButton">
+			<properties>
+				<property name="Left" vt="Int16">210</property>
+				<property name="Top" vt="Int16">542</property>
+				<property name="Width" vt="Int8">95</property>
+				<property name="Height" vt="Int8">35</property>
+				<property name="Caption" vt="String">Donate</property>
+				<property name="TabOrder" vt="Int8">12</property>
 				<property name="Color" vt="Ident">clBtnFace</property>
 				<property name="CtrlStyle" vt="Int32">1342373888</property>
 				<property name="CtrlExStyle" vt="Int8">0</property>
