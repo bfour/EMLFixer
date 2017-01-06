@@ -4,6 +4,14 @@ EMLFixer is a tool that should fix the .eml-file timestamp change issue in Windo
 
 [![download_button](https://bfourdev.files.wordpress.com/2017/01/download_button2.png)](https://github.com/bfour/EMLFixer/raw/master/EMLFixer.zip) 
 
+### Installation
+
+Simply download the zip-Archive and extract all its contents to a location of your choice. No installation required.
+
+### Support this project
+[![pp_donate_button](https://bfourdev.files.wordpress.com/2017/01/pp_donate_button.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=G2ZWPMUAULGXL&lc=AT&item_name=open%20source%20software&item_number=EMLFixer&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) 
+[![bitcoin_donate_button](https://bfourdev.files.wordpress.com/2017/01/bitcoin_donate_button.png)](bitcoin:19gGiv85yPAxayVEVk4BSsUo8KPc37Ht3K?label=EMLFixer) 
+
 ### Background
 
 In newer versions of Windows, probably starting with Windows Vista, there is a bug/peculiar behaviour of the system that causes .eml-files (emails) and .nws-files to have their last modification timestamp changed without the user actively changing anything. This causes severe issues with synchronization tools, as they rely on these timestamps in many cases. This problem is described on [superuser.com](http://superuser.com/questions/1079988/something-in-windows-10-is-re-dating-all-of-my-archived-eml-files), as well as on [answers.microsoft.com](https://answers.microsoft.com/en-us/windows/forum/windows_7-files/why-do-eml-files-modified-date-change-on-mouseover/d6b92680-9200-4731-932f-b45c0c8187dd) and most likely many other forums. While on versions of Windows older than 10 it seems to be possible to fix this by modifying the registry with the following code, there seems to be no solution for Windows 10 so far. At least on two Windows 10 machines I tried this did not resolve the issue.
