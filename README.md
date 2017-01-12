@@ -10,7 +10,7 @@ Simply download the zip-Archive and extract all its contents to a location of yo
 
 ### Support this project
 [![pp_donate_button](https://bfourdev.files.wordpress.com/2017/01/pp_donate_button.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=G2ZWPMUAULGXL&lc=AT&item_name=open%20source%20software&item_number=EMLFixer&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) 
-[![bitcoin_donate_button](https://bfourdev.files.wordpress.com/2017/01/bitcoin_donate_button.png)](bitcoin:19gGiv85yPAxayVEVk4BSsUo8KPc37Ht3K?label=EMLFixer) 
+[![bitcoin_donate_button](https://bfourdev.files.wordpress.com/2017/01/bitcoin_donate_button.png)](https://bfourdev.wordpress.com/donate-via-cryptocoins/) 
 
 ### Background
 
