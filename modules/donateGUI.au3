@@ -10,7 +10,7 @@ Func _donateGUIShow()
 
    If Not IsDeclared("donateGUI") Then
 	  Opt("GUIOnEventMode", 1)
-#Region ### START Koda GUI section ### Form=S:\sabox\grid\templates\donateGUI\donateGUI.kxf
+#Region ### START Koda GUI section ### Form=S:\grid\templates\donateGUI\donateGUI.kxf
 Global $donateGUI = GUICreate("Donate", 297, 214, -1, -1, -1, BitOR($WS_EX_TOOLWINDOW,$WS_EX_WINDOWEDGE))
 GUISetOnEvent($GUI_EVENT_CLOSE, "donateGUIClose")
 GUISetOnEvent($GUI_EVENT_MINIMIZE, "donateGUIMinimize")

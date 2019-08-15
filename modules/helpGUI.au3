@@ -7,7 +7,7 @@ Func _helpGUIShow()
 
    If Not IsDeclared("helpForm") Then
 	  Opt("GUIOnEventMode", 1)
-#Region ### START Koda GUI section ### Form=S:\sabox\grid\EMLFixer\GUI\helpForm.kxf
+#Region ### START Koda GUI section ### Form=S:\grid\EMLFixer\GUI\helpForm.kxf
 Global $helpForm = GUICreate("EMLFixer Help", 465, 365, -1, -1, -1, BitOR($WS_EX_TOOLWINDOW,$WS_EX_WINDOWEDGE))
 GUISetOnEvent($GUI_EVENT_CLOSE, "helpFormClose")
 GUISetOnEvent($GUI_EVENT_MINIMIZE, "helpFormMinimize")

@@ -23,7 +23,7 @@ Func _createGUI()
 
    Global $mainGUI, $fileList, $rootDirInput, $syncDirInput, $statusLabel, $statusIcon, $busyAVI, $startButton, $stopButton
 
-   #Region ### START Koda GUI section ### Form=S:\sabox\grid\EMLFixer\GUI\mainGUI.kxf
+   #Region ### START Koda GUI section ### Form=S:\grid\EMLFixer\GUI\mainGUI.kxf
    Global $mainGUI = GUICreate("EMLFixer", 971, 587, -1, -1, BitOR($GUI_SS_DEFAULT_GUI,$WS_MAXIMIZEBOX,$WS_SIZEBOX,$WS_THICKFRAME,$WS_TABSTOP), BitOR($WS_EX_ACCEPTFILES,$WS_EX_WINDOWEDGE))
    GUISetOnEvent($GUI_EVENT_CLOSE, "mainGUIClose")
    GUISetOnEvent($GUI_EVENT_MINIMIZE, "mainGUIMinimize")
@@ -72,7 +72,7 @@ Func _createGUI()
    Global $donateButton = GUICtrlCreateButton("Donate", 210, 542, 95, 35)
    GUICtrlSetResizing(-1, $GUI_DOCKLEFT+$GUI_DOCKBOTTOM+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
    GUICtrlSetOnEvent(-1, "donateButtonClick")
-   Global $dragdropIcon = GUICtrlCreateIcon("S:\sabox\grid\EMLFixer\GUI\dragndrop_text.ico", -1, 363, 190, 245, 123)
+   Global $dragdropIcon = GUICtrlCreateIcon(@ScriptDir&"\GUI\dragndrop_text.ico", -1, 363, 190, 245, 123)
    GUICtrlSetResizing(-1, $GUI_DOCKHCENTER+$GUI_DOCKVCENTER+$GUI_DOCKWIDTH+$GUI_DOCKHEIGHT)
    GUISetState(@SW_SHOW)
    #EndRegion ### END Koda GUI section ###
